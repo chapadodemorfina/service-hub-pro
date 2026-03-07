@@ -226,6 +226,7 @@ export default function ServiceOrderDetailPage() {
           customerName={order.customer_name || ""}
           intakeDate={order.created_at}
           trackingUrl={trackingUrl}
+          collectionPointName={order.collection_point_name}
         />
       </div>
     </div>
