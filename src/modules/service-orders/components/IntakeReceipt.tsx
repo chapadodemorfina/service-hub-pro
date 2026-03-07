@@ -10,7 +10,7 @@ interface Props {
   trackingUrl?: string | null;
 }
 
-const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order }, ref) => {
+const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order, trackingUrl }, ref) => {
   const { data: terms } = useActiveTerms();
   const { data: signatures } = useOrderSignatures(order.id);
   const activeTerm = terms?.[0];
