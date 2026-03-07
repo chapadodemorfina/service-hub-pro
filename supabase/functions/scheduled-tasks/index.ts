@@ -31,10 +31,37 @@ Deno.serve(async (req) => {
     );
     if (ovdErr) console.error("mark_overdue_entries error:", ovdErr);
 
+    // 3. Process notification events → queue
+    const { data: notifEvents, error: neErr } = await supabase.rpc(
+      "process_notification_events"
+    );
+    if (neErr) console.error("process_notification_events error:", neErr);
+
+    // 4. Process notification queue (call sibling function)
+    let notifResult = null;
+    try {
+      const notifResp = await fetch(
+        `${supabaseUrl}/functions/v1/process-notifications`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${serviceRoleKey}`,
+          },
+          body: JSON.stringify({ source: "scheduled-tasks" }),
+        }
+      );
+      notifResult = await notifResp.json().catch(() => null);
+    } catch (err) {
+      console.error("process-notifications call error:", err);
+    }
+
     const result = {
       success: true,
       expired_quotes: expiredCount ?? 0,
       overdue_entries: overdueCount ?? 0,
+      notification_events: notifEvents ?? null,
+      notification_delivery: notifResult,
       ran_at: new Date().toISOString(),
     };
 

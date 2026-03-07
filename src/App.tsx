@@ -17,6 +17,7 @@ import RolesPage from "./pages/RolesPage";
 import SettingsPage from "./pages/SettingsPage";
 import AuditLogsPage from "./pages/AuditLogsPage";
 import WorkQueuesPage from "./pages/WorkQueuesPage";
+import NotificationsPage from "./modules/notifications/pages/NotificationsPage";
 import NotFound from "./pages/NotFound";
 
 // CRM Module
@@ -100,6 +101,7 @@ const App = () => (
               <Route path="/settings" element={<ProtectedPage><SettingsPage /></ProtectedPage>} />
               <Route path="/audit-logs" element={<ProtectedPage><AuditLogsPage /></ProtectedPage>} />
               <Route path="/queues" element={<ProtectedPage><WorkQueuesPage /></ProtectedPage>} />
+              <Route path="/notifications" element={<ProtectedPage><NotificationsPage /></ProtectedPage>} />
 
               {/* CRM */}
               <Route path="/customers" element={<ProtectedPage><CustomersListPage /></ProtectedPage>} />
