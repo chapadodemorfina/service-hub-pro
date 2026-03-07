@@ -333,6 +333,56 @@ export type Database = {
           },
         ]
       }
+      diagnostics: {
+        Row: {
+          created_at: string
+          diagnosed_by: string | null
+          estimated_repair_hours: number | null
+          id: string
+          internal_notes: string | null
+          probable_cause: string | null
+          repair_complexity: Database["public"]["Enums"]["repair_complexity"]
+          required_parts: string | null
+          service_order_id: string
+          technical_findings: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          diagnosed_by?: string | null
+          estimated_repair_hours?: number | null
+          id?: string
+          internal_notes?: string | null
+          probable_cause?: string | null
+          repair_complexity?: Database["public"]["Enums"]["repair_complexity"]
+          required_parts?: string | null
+          service_order_id: string
+          technical_findings?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          diagnosed_by?: string | null
+          estimated_repair_hours?: number | null
+          id?: string
+          internal_notes?: string | null
+          probable_cause?: string | null
+          repair_complexity?: Database["public"]["Enums"]["repair_complexity"]
+          required_parts?: string | null
+          service_order_id?: string
+          technical_findings?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "diagnostics_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -365,6 +415,147 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      quote_approvals: {
+        Row: {
+          charge_analysis_fee: boolean | null
+          created_at: string
+          decided_by_name: string | null
+          decided_by_role: string | null
+          decision: Database["public"]["Enums"]["quote_status"]
+          id: string
+          quote_id: string
+          reason: string | null
+        }
+        Insert: {
+          charge_analysis_fee?: boolean | null
+          created_at?: string
+          decided_by_name?: string | null
+          decided_by_role?: string | null
+          decision: Database["public"]["Enums"]["quote_status"]
+          id?: string
+          quote_id: string
+          reason?: string | null
+        }
+        Update: {
+          charge_analysis_fee?: boolean | null
+          created_at?: string
+          decided_by_name?: string | null
+          decided_by_role?: string | null
+          decision?: Database["public"]["Enums"]["quote_status"]
+          id?: string
+          quote_id?: string
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quote_approvals_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "repair_quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      repair_quote_items: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          item_type: Database["public"]["Enums"]["quote_item_type"]
+          quantity: number
+          quote_id: string
+          sort_order: number | null
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          item_type: Database["public"]["Enums"]["quote_item_type"]
+          quantity?: number
+          quote_id: string
+          sort_order?: number | null
+          total_price?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          item_type?: Database["public"]["Enums"]["quote_item_type"]
+          quantity?: number
+          quote_id?: string
+          sort_order?: number | null
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repair_quote_items_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "repair_quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      repair_quotes: {
+        Row: {
+          analysis_fee: number | null
+          created_at: string
+          created_by: string | null
+          discount_amount: number | null
+          discount_percent: number | null
+          expires_at: string | null
+          id: string
+          notes: string | null
+          quote_number: string
+          service_order_id: string
+          status: Database["public"]["Enums"]["quote_status"]
+          total_amount: number | null
+          updated_at: string
+        }
+        Insert: {
+          analysis_fee?: number | null
+          created_at?: string
+          created_by?: string | null
+          discount_amount?: number | null
+          discount_percent?: number | null
+          expires_at?: string | null
+          id?: string
+          notes?: string | null
+          quote_number?: string
+          service_order_id: string
+          status?: Database["public"]["Enums"]["quote_status"]
+          total_amount?: number | null
+          updated_at?: string
+        }
+        Update: {
+          analysis_fee?: number | null
+          created_at?: string
+          created_by?: string | null
+          discount_amount?: number | null
+          discount_percent?: number | null
+          expires_at?: string | null
+          id?: string
+          notes?: string | null
+          quote_number?: string
+          service_order_id?: string
+          status?: Database["public"]["Enums"]["quote_status"]
+          total_amount?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repair_quotes_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       service_order_attachments: {
         Row: {
@@ -691,6 +882,9 @@ export type Database = {
         | "phone"
         | "email"
         | "website"
+      quote_item_type: "labor" | "part"
+      quote_status: "draft" | "sent" | "approved" | "rejected" | "expired"
+      repair_complexity: "simple" | "moderate" | "complex" | "specialized"
       service_order_priority: "low" | "normal" | "high" | "urgent"
       service_order_status:
         | "received"
@@ -863,6 +1057,9 @@ export const Constants = {
         "email",
         "website",
       ],
+      quote_item_type: ["labor", "part"],
+      quote_status: ["draft", "sent", "approved", "rejected", "expired"],
+      repair_complexity: ["simple", "moderate", "complex", "specialized"],
       service_order_priority: ["low", "normal", "high", "urgent"],
       service_order_status: [
         "received",
