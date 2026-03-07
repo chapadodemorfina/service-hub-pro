@@ -1132,6 +1132,64 @@ export type Database = {
         }
         Relationships: []
       }
+      part_reservations: {
+        Row: {
+          created_at: string
+          diagnosis_id: string | null
+          id: string
+          product_id: string
+          quantity: number
+          reserved_by: string | null
+          service_order_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          diagnosis_id?: string | null
+          id?: string
+          product_id: string
+          quantity?: number
+          reserved_by?: string | null
+          service_order_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          diagnosis_id?: string | null
+          id?: string
+          product_id?: string
+          quantity?: number
+          reserved_by?: string | null
+          service_order_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "part_reservations_diagnosis_id_fkey"
+            columns: ["diagnosis_id"]
+            isOneToOne: false
+            referencedRelation: "diagnostics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "part_reservations_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "part_reservations_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payments: {
         Row: {
           amount: number
@@ -1290,6 +1348,7 @@ export type Database = {
           name: string
           notes: string | null
           quantity: number
+          reserved_quantity: number
           sale_price: number
           sku: string
           supplier_id: string | null
@@ -1309,6 +1368,7 @@ export type Database = {
           name: string
           notes?: string | null
           quantity?: number
+          reserved_quantity?: number
           sale_price?: number
           sku: string
           supplier_id?: string | null
@@ -1328,6 +1388,7 @@ export type Database = {
           name?: string
           notes?: string | null
           quantity?: number
+          reserved_quantity?: number
           sale_price?: number
           sku?: string
           supplier_id?: string | null
@@ -2550,6 +2611,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      adjust_stock: {
+        Args: { _new_quantity: number; _product_id: string; _reason?: string }
+        Returns: Json
+      }
       approve_reject_quote: {
         Args: {
           _charge_analysis_fee?: boolean
@@ -2633,6 +2698,16 @@ export type Database = {
           _payment_date?: string
           _payment_method?: string
           _reference?: string
+        }
+        Returns: Json
+      }
+      release_reservation: { Args: { _reservation_id: string }; Returns: Json }
+      reserve_part: {
+        Args: {
+          _diagnosis_id?: string
+          _product_id: string
+          _quantity?: number
+          _service_order_id: string
         }
         Returns: Json
       }
