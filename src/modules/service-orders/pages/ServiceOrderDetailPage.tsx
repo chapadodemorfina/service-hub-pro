@@ -7,6 +7,7 @@ import StatusChangeDialog from "../components/StatusChangeDialog";
 import SignatureCapture from "../components/SignatureCapture";
 import AttachmentUpload from "../components/AttachmentUpload";
 import IntakeReceipt from "../components/IntakeReceipt";
+import DiagnosticQuotePanel from "@/modules/diagnostics/components/DiagnosticQuotePanel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -169,6 +170,9 @@ export default function ServiceOrderDetailPage() {
               )}
             </CardContent>
           </Card>
+
+          {/* Diagnosis & Quote */}
+          <DiagnosticQuotePanel serviceOrderId={order.id} />
 
           {/* Attachments */}
           <AttachmentUpload orderId={order.id} />
