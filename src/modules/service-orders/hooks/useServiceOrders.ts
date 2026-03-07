@@ -47,16 +47,26 @@ export function useServiceOrder(id: string | undefined) {
     queryFn: async () => {
       const { data, error } = await db
         .from("service_orders")
-        .select("*, customers!inner(full_name), devices(brand, model)")
+        .select("*, customers!inner(full_name, phone, document), devices(brand, model, device_type, serial_number, imei, color), collection_points(name)")
         .eq("id", id!)
         .single();
       if (error) throw error;
       return {
         ...data,
         customer_name: data.customers?.full_name,
+        customer_phone: data.customers?.phone || null,
+        customer_document: data.customers?.document || null,
         device_label: data.devices ? `${data.devices.brand || ""} ${data.devices.model || ""}`.trim() : null,
+        device_type: data.devices?.device_type || null,
+        device_serial: data.devices?.serial_number || null,
+        device_imei: data.devices?.imei || null,
+        device_color: data.devices?.color || null,
+        device_brand: data.devices?.brand || null,
+        device_model: data.devices?.model || null,
+        collection_point_name: data.collection_points?.name || null,
         customers: undefined,
         devices: undefined,
+        collection_points: undefined,
       } as ServiceOrder;
     },
   });

@@ -83,7 +83,16 @@ export interface ServiceOrder {
   updated_at: string;
   // joined
   customer_name?: string;
+  customer_phone?: string | null;
+  customer_document?: string | null;
   device_label?: string;
+  device_type?: string | null;
+  device_serial?: string | null;
+  device_imei?: string | null;
+  device_color?: string | null;
+  device_brand?: string | null;
+  device_model?: string | null;
+  collection_point_name?: string | null;
   technician_name?: string;
 }
 

@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { ServiceOrder, statusLabels, priorityLabels, channelLabels } from "../types";
+import { deviceTypeLabels } from "@/modules/devices/types";
 import { useActiveTerms, useOrderSignatures } from "../hooks/useServiceOrders";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -40,13 +41,26 @@ const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order, trackingUrl },
       <div className="border rounded p-3 mb-4">
         <p className="font-bold mb-1">Cliente</p>
         <p>{order.customer_name}</p>
+        {order.customer_phone && <p className="text-xs">Telefone: {order.customer_phone}</p>}
+        {order.customer_document && <p className="text-xs">Documento: {order.customer_document}</p>}
       </div>
 
       {/* Device */}
-      {order.device_label && (
+      {(order.device_label || order.device_type) && (
         <div className="border rounded p-3 mb-4">
           <p className="font-bold mb-1">Dispositivo</p>
-          <p>{order.device_label}</p>
+          <table className="text-xs w-full">
+            <tbody>
+              {order.device_type && (
+                <tr><td className="pr-2 font-medium">Tipo:</td><td>{deviceTypeLabels[order.device_type as keyof typeof deviceTypeLabels] || order.device_type}</td></tr>
+              )}
+              {order.device_brand && <tr><td className="pr-2 font-medium">Marca:</td><td>{order.device_brand}</td></tr>}
+              {order.device_model && <tr><td className="pr-2 font-medium">Modelo:</td><td>{order.device_model}</td></tr>}
+              {order.device_serial && <tr><td className="pr-2 font-medium">Nº Série:</td><td>{order.device_serial}</td></tr>}
+              {order.device_imei && <tr><td className="pr-2 font-medium">IMEI:</td><td>{order.device_imei}</td></tr>}
+              {order.device_color && <tr><td className="pr-2 font-medium">Cor:</td><td>{order.device_color}</td></tr>}
+            </tbody>
+          </table>
         </div>
       )}
 
@@ -74,6 +88,14 @@ const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order, trackingUrl },
         <div className="border rounded p-3 mb-4">
           <p className="font-bold mb-1">Prazo Estimado</p>
           <p>{format(new Date(order.expected_deadline), "dd/MM/yyyy HH:mm", { locale: ptBR })}</p>
+        </div>
+      )}
+
+      {/* Collection Point */}
+      {order.collection_point_name && (
+        <div className="border rounded p-3 mb-4">
+          <p className="font-bold mb-1">Ponto de Coleta</p>
+          <p>{order.collection_point_name}</p>
         </div>
       )}
 
@@ -107,11 +129,12 @@ const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order, trackingUrl },
         )}
       </div>
 
-      {/* QR Code for tracking */}
+      {/* QR Code + Tracking */}
       {trackingUrl && (
         <div className="mt-6 flex flex-col items-center">
           <QRCodeSVG value={trackingUrl} size={120} level="M" />
-          <p className="text-xs mt-2">Acompanhe seu reparo escaneando o QR Code</p>
+          <p className="text-xs mt-2 font-medium">Acompanhe seu reparo escaneando o QR Code</p>
+          <p className="text-xs text-gray-500 break-all mt-1">{trackingUrl}</p>
         </div>
       )}
 
