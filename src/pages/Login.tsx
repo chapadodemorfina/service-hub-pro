@@ -63,9 +63,13 @@ export default function Login() {
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Entrar
             </Button>
-            <div className="text-center">
+            <div className="text-center space-y-1">
               <Link to="/forgot-password" className="text-sm text-muted-foreground hover:text-primary">
                 Esqueceu a senha?
+              </Link>
+              <br />
+              <Link to="/portal/login" className="text-sm text-muted-foreground hover:text-primary">
+                Portal do Cliente →
               </Link>
             </div>
           </form>
