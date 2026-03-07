@@ -171,10 +171,10 @@ export function useSaveAddress() {
   return useMutation({
     mutationFn: async ({ id, customerId, data }: { id?: string; customerId: string; data: AddressFormData }) => {
       if (id) {
-        const { error } = await supabase.from("customer_addresses").update(data).eq("id", id);
+        const { error } = await supabase.from("customer_addresses").update(data as any).eq("id", id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("customer_addresses").insert({ ...data, customer_id: customerId });
+        const { error } = await supabase.from("customer_addresses").insert({ ...data, customer_id: customerId } as any);
         if (error) throw error;
       }
     },
@@ -215,10 +215,10 @@ export function useSaveContact() {
   return useMutation({
     mutationFn: async ({ id, customerId, data }: { id?: string; customerId: string; data: ContactFormData }) => {
       if (id) {
-        const { error } = await supabase.from("customer_contacts").update(data).eq("id", id);
+        const { error } = await supabase.from("customer_contacts").update(data as any).eq("id", id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("customer_contacts").insert({ ...data, customer_id: customerId });
+        const { error } = await supabase.from("customer_contacts").insert({ ...data, customer_id: customerId } as any);
         if (error) throw error;
       }
     },
