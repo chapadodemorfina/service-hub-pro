@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import { ServiceOrder, statusLabels, priorityLabels, channelLabels } from "../types";
 import { useActiveTerms, useOrderSignatures } from "../hooks/useServiceOrders";
 import { format } from "date-fns";
@@ -6,9 +7,10 @@ import { ptBR } from "date-fns/locale";
 
 interface Props {
   order: ServiceOrder;
+  trackingUrl?: string | null;
 }
 
-const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order }, ref) => {
+const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order, trackingUrl }, ref) => {
   const { data: terms } = useActiveTerms();
   const { data: signatures } = useOrderSignatures(order.id);
   const activeTerm = terms?.[0];
@@ -104,6 +106,14 @@ const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order }, ref) => {
           </div>
         )}
       </div>
+
+      {/* QR Code for tracking */}
+      {trackingUrl && (
+        <div className="mt-6 flex flex-col items-center">
+          <QRCodeSVG value={trackingUrl} size={120} level="M" />
+          <p className="text-xs mt-2">Acompanhe seu reparo escaneando o QR Code</p>
+        </div>
+      )}
 
       {/* Footer */}
       <div className="mt-8 text-center text-xs border-t pt-2">
