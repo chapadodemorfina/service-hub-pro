@@ -1526,6 +1526,33 @@ export type Database = {
         }
         Relationships: []
       }
+      sla_configs: {
+        Row: {
+          created_at: string
+          id: string
+          priority: string
+          status: string
+          target_hours: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          priority: string
+          status: string
+          target_hours: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          priority?: string
+          status?: string
+          target_hours?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       stock_movements: {
         Row: {
           created_at: string
@@ -1820,6 +1847,9 @@ export type Database = {
         Args: { _reason: string; _warranty_id: string }
         Returns: Json
       }
+      dashboard_summary: { Args: { _from: string; _to: string }; Returns: Json }
+      expire_stale_quotes: { Args: never; Returns: number }
+      finance_summary: { Args: never; Returns: Json }
       get_user_collection_points: {
         Args: { _user_id: string }
         Returns: string[]
@@ -1827,6 +1857,17 @@ export type Database = {
       get_user_roles: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"][]
+      }
+      get_work_queues: {
+        Args: {
+          _collection_point_only?: boolean
+          _page?: number
+          _page_size?: number
+          _priority?: string
+          _queue?: string
+          _technician_id?: string
+        }
+        Returns: Json
       }
       has_any_role: {
         Args: {
@@ -1846,6 +1887,7 @@ export type Database = {
       is_cp_operator_for_so: { Args: { _so_id: string }; Returns: boolean }
       is_customer_for_so: { Args: { _so_id: string }; Returns: boolean }
       is_technician_for_so: { Args: { _so_id: string }; Returns: boolean }
+      mark_overdue_entries: { Args: never; Returns: number }
       register_payment: {
         Args: {
           _amount: number
