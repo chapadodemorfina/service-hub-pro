@@ -50,6 +50,230 @@ export type Database = {
         }
         Relationships: []
       }
+      collection_point_commissions: {
+        Row: {
+          base_amount: number
+          calculated_amount: number
+          collection_point_id: string
+          commission_type: Database["public"]["Enums"]["commission_type"]
+          commission_value: number
+          created_at: string
+          id: string
+          is_paid: boolean
+          notes: string | null
+          paid_at: string | null
+          service_order_id: string
+        }
+        Insert: {
+          base_amount?: number
+          calculated_amount?: number
+          collection_point_id: string
+          commission_type: Database["public"]["Enums"]["commission_type"]
+          commission_value?: number
+          created_at?: string
+          id?: string
+          is_paid?: boolean
+          notes?: string | null
+          paid_at?: string | null
+          service_order_id: string
+        }
+        Update: {
+          base_amount?: number
+          calculated_amount?: number
+          collection_point_id?: string
+          commission_type?: Database["public"]["Enums"]["commission_type"]
+          commission_value?: number
+          created_at?: string
+          id?: string
+          is_paid?: boolean
+          notes?: string | null
+          paid_at?: string | null
+          service_order_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_point_commissions_collection_point_id_fkey"
+            columns: ["collection_point_id"]
+            isOneToOne: false
+            referencedRelation: "collection_points"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collection_point_commissions_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collection_point_users: {
+        Row: {
+          collection_point_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          user_id: string
+        }
+        Insert: {
+          collection_point_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          user_id: string
+        }
+        Update: {
+          collection_point_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_point_users_collection_point_id_fkey"
+            columns: ["collection_point_id"]
+            isOneToOne: false
+            referencedRelation: "collection_points"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collection_points: {
+        Row: {
+          city: string | null
+          commission_type: Database["public"]["Enums"]["commission_type"]
+          commission_value: number
+          company_name: string | null
+          complement: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          is_active: boolean
+          name: string
+          neighborhood: string | null
+          notes: string | null
+          number: string | null
+          phone: string | null
+          responsible_person: string | null
+          state: string | null
+          street: string | null
+          updated_at: string
+          whatsapp: string | null
+          zip_code: string | null
+        }
+        Insert: {
+          city?: string | null
+          commission_type?: Database["public"]["Enums"]["commission_type"]
+          commission_value?: number
+          company_name?: string | null
+          complement?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          neighborhood?: string | null
+          notes?: string | null
+          number?: string | null
+          phone?: string | null
+          responsible_person?: string | null
+          state?: string | null
+          street?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+          zip_code?: string | null
+        }
+        Update: {
+          city?: string | null
+          commission_type?: Database["public"]["Enums"]["commission_type"]
+          commission_value?: number
+          company_name?: string | null
+          complement?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          neighborhood?: string | null
+          notes?: string | null
+          number?: string | null
+          phone?: string | null
+          responsible_person?: string | null
+          state?: string | null
+          street?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
+      collection_transfers: {
+        Row: {
+          collection_point_id: string
+          created_at: string
+          direction: string
+          id: string
+          notes: string | null
+          received_at: string | null
+          received_by: string | null
+          service_order_id: string
+          status: Database["public"]["Enums"]["transfer_status"]
+          tracking_code: string | null
+          transferred_at: string | null
+          transferred_by: string | null
+          updated_at: string
+        }
+        Insert: {
+          collection_point_id: string
+          created_at?: string
+          direction?: string
+          id?: string
+          notes?: string | null
+          received_at?: string | null
+          received_by?: string | null
+          service_order_id: string
+          status?: Database["public"]["Enums"]["transfer_status"]
+          tracking_code?: string | null
+          transferred_at?: string | null
+          transferred_by?: string | null
+          updated_at?: string
+        }
+        Update: {
+          collection_point_id?: string
+          created_at?: string
+          direction?: string
+          id?: string
+          notes?: string | null
+          received_at?: string | null
+          received_by?: string | null
+          service_order_id?: string
+          status?: Database["public"]["Enums"]["transfer_status"]
+          tracking_code?: string | null
+          transferred_at?: string | null
+          transferred_by?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_transfers_collection_point_id_fkey"
+            columns: ["collection_point_id"]
+            isOneToOne: false
+            referencedRelation: "collection_points"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collection_transfers_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customer_addresses: {
         Row: {
           city: string | null
@@ -1295,6 +1519,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_user_collection_points: {
+        Args: { _user_id: string }
+        Returns: string[]
+      }
       get_user_roles: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"][]
@@ -1317,6 +1545,7 @@ export type Database = {
         | "finance"
         | "collection_point_operator"
         | "customer"
+      commission_type: "percentage" | "fixed_per_order" | "fixed_per_device"
       customer_type: "individual" | "business"
       device_type:
         | "notebook"
@@ -1360,6 +1589,13 @@ export type Database = {
         | "return"
         | "reserved"
         | "consumed"
+      transfer_status:
+        | "pending_pickup"
+        | "in_transit_to_center"
+        | "received_at_center"
+        | "in_transit_to_collection_point"
+        | "delivered_to_collection_point"
+        | "delivered_to_customer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1497,6 +1733,7 @@ export const Constants = {
         "collection_point_operator",
         "customer",
       ],
+      commission_type: ["percentage", "fixed_per_order", "fixed_per_device"],
       customer_type: ["individual", "business"],
       device_type: [
         "notebook",
@@ -1543,6 +1780,14 @@ export const Constants = {
         "return",
         "reserved",
         "consumed",
+      ],
+      transfer_status: [
+        "pending_pickup",
+        "in_transit_to_center",
+        "received_at_center",
+        "in_transit_to_collection_point",
+        "delivered_to_collection_point",
+        "delivered_to_customer",
       ],
     },
   },
