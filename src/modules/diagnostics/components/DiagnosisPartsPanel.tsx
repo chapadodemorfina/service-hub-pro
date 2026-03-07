@@ -1,0 +1,119 @@
+import { useState } from "react";
+import { useDiagnosisParts, useAddDiagnosisPart, useDeleteDiagnosisPart } from "../hooks/useDiagnostics";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Plus, Trash2 } from "lucide-react";
+
+interface Props {
+  diagnosisId: string;
+  readOnly?: boolean;
+}
+
+export default function DiagnosisPartsPanel({ diagnosisId, readOnly }: Props) {
+  const { data: parts, isLoading } = useDiagnosisParts(diagnosisId);
+  const addPart = useAddDiagnosisPart();
+  const deletePart = useDeleteDiagnosisPart();
+  const [partName, setPartName] = useState("");
+  const [qty, setQty] = useState("1");
+  const [cost, setCost] = useState("");
+
+  const handleAdd = async () => {
+    if (!partName.trim()) return;
+    await addPart.mutateAsync({
+      diagnosisId,
+      partName: partName.trim(),
+      quantity: parseInt(qty) || 1,
+      estimatedUnitCost: parseFloat(cost) || 0,
+    });
+    setPartName("");
+    setQty("1");
+    setCost("");
+  };
+
+  const totalCost = (parts || []).reduce((s, p) => s + p.quantity * p.estimated_unit_cost, 0);
+
+  if (isLoading) return <p className="text-sm text-muted-foreground">Carregando...</p>;
+
+  return (
+    <div className="space-y-3">
+      {parts && parts.length > 0 && (
+        <div className="text-xs text-muted-foreground">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b">
+                <th className="text-left py-1 font-medium">Peça</th>
+                <th className="text-center py-1 font-medium w-16">Qtd</th>
+                <th className="text-right py-1 font-medium w-24">Custo Unit.</th>
+                <th className="text-right py-1 font-medium w-24">Subtotal</th>
+                {!readOnly && <th className="w-8" />}
+              </tr>
+            </thead>
+            <tbody>
+              {parts.map((part) => (
+                <tr key={part.id} className="border-b last:border-0">
+                  <td className="py-1.5 text-sm text-foreground">{part.part_name}</td>
+                  <td className="py-1.5 text-center text-sm">{part.quantity}</td>
+                  <td className="py-1.5 text-right text-sm">R$ {Number(part.estimated_unit_cost).toFixed(2)}</td>
+                  <td className="py-1.5 text-right text-sm font-medium">
+                    R$ {(part.quantity * part.estimated_unit_cost).toFixed(2)}
+                  </td>
+                  {!readOnly && (
+                    <td className="py-1.5">
+                      <Button variant="ghost" size="icon" className="h-6 w-6"
+                        onClick={() => deletePart.mutate({ id: part.id, diagnosisId })}>
+                        <Trash2 className="h-3 w-3" />
+                      </Button>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr className="border-t">
+                <td colSpan={3} className="py-1.5 text-right font-medium text-sm text-foreground">Total estimado:</td>
+                <td className="py-1.5 text-right font-bold text-sm text-foreground">R$ {totalCost.toFixed(2)}</td>
+                {!readOnly && <td />}
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      )}
+
+      {!readOnly && (
+        <div className="flex gap-2 pt-2">
+          <Input
+            value={partName}
+            onChange={(e) => setPartName(e.target.value)}
+            placeholder="Nome da peça..."
+            className="h-8 flex-1"
+            onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAdd())}
+          />
+          <Input
+            value={qty}
+            onChange={(e) => setQty(e.target.value)}
+            placeholder="Qtd"
+            type="number"
+            min="1"
+            className="h-8 w-16"
+          />
+          <Input
+            value={cost}
+            onChange={(e) => setCost(e.target.value)}
+            placeholder="Custo"
+            type="number"
+            step="0.01"
+            min="0"
+            className="h-8 w-24"
+          />
+          <Button variant="outline" size="sm" onClick={handleAdd} disabled={addPart.isPending}>
+            <Plus className="h-3 w-3" />
+          </Button>
+        </div>
+      )}
+
+      {(!parts || parts.length === 0) && (
+        <p className="text-xs text-muted-foreground text-center py-2">Nenhuma peça registrada.</p>
+      )}
+    </div>
+  );
+}
