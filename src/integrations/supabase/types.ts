@@ -703,6 +703,254 @@ export type Database = {
           },
         ]
       }
+      notification_events: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          entity_id: string
+          entity_type: string
+          event_type: string
+          id: string
+          payload: Json
+          processed_at: string | null
+          processing_status: Database["public"]["Enums"]["notification_processing_status"]
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          entity_id: string
+          entity_type: string
+          event_type: string
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+          processing_status?: Database["public"]["Enums"]["notification_processing_status"]
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          entity_id?: string
+          entity_type?: string
+          event_type?: string
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+          processing_status?: Database["public"]["Enums"]["notification_processing_status"]
+        }
+        Relationships: []
+      }
+      notification_logs: {
+        Row: {
+          created_at: string
+          id: string
+          provider_key: string | null
+          queue_id: string | null
+          request_payload: Json | null
+          response_payload: Json | null
+          response_status: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          provider_key?: string | null
+          queue_id?: string | null
+          request_payload?: Json | null
+          response_payload?: Json | null
+          response_status?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          provider_key?: string | null
+          queue_id?: string | null
+          request_payload?: Json | null
+          response_payload?: Json | null
+          response_status?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_logs_queue_id_fkey"
+            columns: ["queue_id"]
+            isOneToOne: false
+            referencedRelation: "notification_queue"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_queue: {
+        Row: {
+          attempts: number
+          channel: Database["public"]["Enums"]["notification_channel"]
+          created_at: string
+          error_message: string | null
+          event_id: string | null
+          id: string
+          last_attempt_at: string | null
+          next_attempt_at: string
+          payload: Json | null
+          recipient_address: string
+          recipient_name: string | null
+          rendered_body: string
+          rendered_subject: string | null
+          rule_id: string | null
+          sent_at: string | null
+          status: Database["public"]["Enums"]["notification_queue_status"]
+          template_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          channel: Database["public"]["Enums"]["notification_channel"]
+          created_at?: string
+          error_message?: string | null
+          event_id?: string | null
+          id?: string
+          last_attempt_at?: string | null
+          next_attempt_at?: string
+          payload?: Json | null
+          recipient_address: string
+          recipient_name?: string | null
+          rendered_body: string
+          rendered_subject?: string | null
+          rule_id?: string | null
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["notification_queue_status"]
+          template_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          channel?: Database["public"]["Enums"]["notification_channel"]
+          created_at?: string
+          error_message?: string | null
+          event_id?: string | null
+          id?: string
+          last_attempt_at?: string | null
+          next_attempt_at?: string
+          payload?: Json | null
+          recipient_address?: string
+          recipient_name?: string | null
+          rendered_body?: string
+          rendered_subject?: string | null
+          rule_id?: string | null
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["notification_queue_status"]
+          template_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_queue_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "notification_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notification_queue_rule_id_fkey"
+            columns: ["rule_id"]
+            isOneToOne: false
+            referencedRelation: "notification_rules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notification_queue_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "notification_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_rules: {
+        Row: {
+          channel: Database["public"]["Enums"]["notification_channel"]
+          conditions: Json | null
+          created_at: string
+          delay_minutes: number
+          event_type: string
+          id: string
+          is_active: boolean
+          provider_key: string | null
+          target_audience: string
+          template_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          channel: Database["public"]["Enums"]["notification_channel"]
+          conditions?: Json | null
+          created_at?: string
+          delay_minutes?: number
+          event_type: string
+          id?: string
+          is_active?: boolean
+          provider_key?: string | null
+          target_audience?: string
+          template_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          channel?: Database["public"]["Enums"]["notification_channel"]
+          conditions?: Json | null
+          created_at?: string
+          delay_minutes?: number
+          event_type?: string
+          id?: string
+          is_active?: boolean
+          provider_key?: string | null
+          target_audience?: string
+          template_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_rules_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "notification_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notification_templates: {
+        Row: {
+          body: string
+          channel: Database["public"]["Enums"]["notification_channel"]
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          subject: string | null
+          template_key: string
+          updated_at: string
+          variables: Json | null
+        }
+        Insert: {
+          body: string
+          channel: Database["public"]["Enums"]["notification_channel"]
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          subject?: string | null
+          template_key: string
+          updated_at?: string
+          variables?: Json | null
+        }
+        Update: {
+          body?: string
+          channel?: Database["public"]["Enums"]["notification_channel"]
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          subject?: string | null
+          template_key?: string
+          updated_at?: string
+          variables?: Json | null
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -1888,6 +2136,7 @@ export type Database = {
       is_customer_for_so: { Args: { _so_id: string }; Returns: boolean }
       is_technician_for_so: { Args: { _so_id: string }; Returns: boolean }
       mark_overdue_entries: { Args: never; Returns: number }
+      process_notification_events: { Args: never; Returns: Json }
       register_payment: {
         Args: {
           _amount: number
@@ -1947,6 +2196,19 @@ export type Database = {
         | "return_scheduled"
         | "returned"
       logistics_type: "pickup" | "delivery" | "collection_point_transfer"
+      notification_channel: "whatsapp" | "email" | "sms" | "internal"
+      notification_processing_status:
+        | "pending"
+        | "processing"
+        | "processed"
+        | "failed"
+      notification_queue_status:
+        | "pending"
+        | "processing"
+        | "sent"
+        | "failed"
+        | "cancelled"
+        | "skipped"
       payment_method:
         | "cash"
         | "credit_card"
@@ -2165,6 +2427,21 @@ export const Constants = {
         "returned",
       ],
       logistics_type: ["pickup", "delivery", "collection_point_transfer"],
+      notification_channel: ["whatsapp", "email", "sms", "internal"],
+      notification_processing_status: [
+        "pending",
+        "processing",
+        "processed",
+        "failed",
+      ],
+      notification_queue_status: [
+        "pending",
+        "processing",
+        "sent",
+        "failed",
+        "cancelled",
+        "skipped",
+      ],
       payment_method: [
         "cash",
         "credit_card",
