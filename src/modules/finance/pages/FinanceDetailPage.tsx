@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useFinancialEntry, usePayments, useDeleteFinancialEntry, useUpdateFinancialEntry } from "../hooks/useFinance";
 import {
   entryTypeLabels, entryTypeColors, statusLabels, statusColors,
-  paymentMethodLabels, statusTransitions,
+  paymentMethodLabels,
 } from "../types";
 import PaymentDialog from "../components/PaymentDialog";
 import { Badge } from "@/components/ui/badge";
