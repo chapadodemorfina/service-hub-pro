@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import { ServiceOrder, statusLabels, priorityLabels, channelLabels } from "../types";
 import { useActiveTerms, useOrderSignatures } from "../hooks/useServiceOrders";
 import { format } from "date-fns";
@@ -6,6 +7,7 @@ import { ptBR } from "date-fns/locale";
 
 interface Props {
   order: ServiceOrder;
+  trackingUrl?: string | null;
 }
 
 const IntakeReceipt = forwardRef<HTMLDivElement, Props>(({ order }, ref) => {
