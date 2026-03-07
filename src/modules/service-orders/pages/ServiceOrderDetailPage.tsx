@@ -8,6 +8,7 @@ import SignatureCapture from "../components/SignatureCapture";
 import AttachmentUpload from "../components/AttachmentUpload";
 import IntakeReceipt from "../components/IntakeReceipt";
 import DeviceIntakeLabel from "../components/DeviceIntakeLabel";
+import WhatsAppIntakeMessage from "../components/WhatsAppIntakeMessage";
 import DiagnosticQuotePanel from "@/modules/diagnostics/components/DiagnosticQuotePanel";
 import RepairTestWarrantyPanel from "@/modules/repair/components/RepairTestWarrantyPanel";
 import PublicLinkManager from "@/modules/tracking/components/PublicLinkManager";
@@ -205,6 +206,14 @@ export default function ServiceOrderDetailPage() {
           </Card>
 
           <PublicLinkManager serviceOrderId={order.id} orderNumber={order.order_number} />
+
+          {/* WhatsApp intake message */}
+          <WhatsAppIntakeMessage
+            customerName={order.customer_name || "Cliente"}
+            customerPhone={order.customer_phone}
+            orderNumber={order.order_number}
+            trackingUrl={trackingUrl}
+          />
         </div>
       </div>
 

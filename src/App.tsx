@@ -38,6 +38,7 @@ import ServiceOrdersListPage from "./modules/service-orders/pages/ServiceOrdersL
 import ServiceOrderCreatePage from "./modules/service-orders/pages/ServiceOrderCreatePage";
 import ServiceOrderEditPage from "./modules/service-orders/pages/ServiceOrderEditPage";
 import ServiceOrderDetailPage from "./modules/service-orders/pages/ServiceOrderDetailPage";
+import ScanServiceOrderPage from "./modules/service-orders/pages/ScanServiceOrderPage";
 
 // Inventory Module
 import ProductsListPage from "./modules/inventory/pages/ProductsListPage";
@@ -125,6 +126,7 @@ const App = () => (
               <Route path="/service-orders/new" element={<ProtectedPage><ServiceOrderCreatePage /></ProtectedPage>} />
               <Route path="/service-orders/:id" element={<ProtectedPage><ServiceOrderDetailPage /></ProtectedPage>} />
               <Route path="/service-orders/:id/edit" element={<ProtectedPage><ServiceOrderEditPage /></ProtectedPage>} />
+              <Route path="/service-orders/scan" element={<ProtectedPage><ScanServiceOrderPage /></ProtectedPage>} />
 
               {/* Inventory */}
               <Route path="/inventory" element={<ProtectedPage><ProductsListPage /></ProtectedPage>} />
