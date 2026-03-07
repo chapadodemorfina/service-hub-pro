@@ -557,6 +557,88 @@ export type Database = {
           },
         ]
       }
+      repair_services: {
+        Row: {
+          action_type: string
+          created_at: string
+          description: string
+          id: string
+          service_order_id: string
+          technician_id: string | null
+          time_spent_minutes: number | null
+        }
+        Insert: {
+          action_type?: string
+          created_at?: string
+          description: string
+          id?: string
+          service_order_id: string
+          technician_id?: string | null
+          time_spent_minutes?: number | null
+        }
+        Update: {
+          action_type?: string
+          created_at?: string
+          description?: string
+          id?: string
+          service_order_id?: string
+          technician_id?: string | null
+          time_spent_minutes?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repair_services_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      repair_tests: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          passed: boolean | null
+          service_order_id: string
+          sort_order: number | null
+          test_name: string
+          tested_at: string | null
+          tested_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          passed?: boolean | null
+          service_order_id: string
+          sort_order?: number | null
+          test_name: string
+          tested_at?: string | null
+          tested_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          passed?: boolean | null
+          service_order_id?: string
+          sort_order?: number | null
+          test_name?: string
+          tested_at?: string | null
+          tested_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "repair_tests_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       service_order_attachments: {
         Row: {
           caption: string | null
@@ -835,6 +917,111 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      warranties: {
+        Row: {
+          coverage_description: string | null
+          created_at: string
+          created_by: string | null
+          end_date: string
+          id: string
+          is_void: boolean
+          service_order_id: string
+          start_date: string
+          terms: string | null
+          warranty_number: string
+        }
+        Insert: {
+          coverage_description?: string | null
+          created_at?: string
+          created_by?: string | null
+          end_date?: string
+          id?: string
+          is_void?: boolean
+          service_order_id: string
+          start_date?: string
+          terms?: string | null
+          warranty_number?: string
+        }
+        Update: {
+          coverage_description?: string | null
+          created_at?: string
+          created_by?: string | null
+          end_date?: string
+          id?: string
+          is_void?: boolean
+          service_order_id?: string
+          start_date?: string
+          terms?: string | null
+          warranty_number?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "warranties_service_order_id_fkey"
+            columns: ["service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      warranty_returns: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          new_service_order_id: string | null
+          original_service_order_id: string
+          reason: string
+          status: string
+          updated_at: string
+          warranty_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          new_service_order_id?: string | null
+          original_service_order_id: string
+          reason: string
+          status?: string
+          updated_at?: string
+          warranty_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          new_service_order_id?: string | null
+          original_service_order_id?: string
+          reason?: string
+          status?: string
+          updated_at?: string
+          warranty_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "warranty_returns_new_service_order_id_fkey"
+            columns: ["new_service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "warranty_returns_original_service_order_id_fkey"
+            columns: ["original_service_order_id"]
+            isOneToOne: false
+            referencedRelation: "service_orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "warranty_returns_warranty_id_fkey"
+            columns: ["warranty_id"]
+            isOneToOne: false
+            referencedRelation: "warranties"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
