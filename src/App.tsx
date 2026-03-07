@@ -70,6 +70,12 @@ const App = () => (
               <Route path="/devices/:id" element={<ProtectedPage><DeviceDetailPage /></ProtectedPage>} />
               <Route path="/devices/:id/edit" element={<ProtectedPage><DeviceEditPage /></ProtectedPage>} />
 
+              {/* Service Orders */}
+              <Route path="/service-orders" element={<ProtectedPage><ServiceOrdersListPage /></ProtectedPage>} />
+              <Route path="/service-orders/new" element={<ProtectedPage><ServiceOrderCreatePage /></ProtectedPage>} />
+              <Route path="/service-orders/:id" element={<ProtectedPage><ServiceOrderDetailPage /></ProtectedPage>} />
+              <Route path="/service-orders/:id/edit" element={<ProtectedPage><ServiceOrderEditPage /></ProtectedPage>} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
