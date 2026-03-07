@@ -10,10 +10,11 @@ interface Props {
   customerName: string;
   intakeDate: string;
   trackingUrl: string | null;
+  collectionPointName?: string | null;
 }
 
 const DeviceIntakeLabel = forwardRef<HTMLDivElement, Props>(
-  ({ orderNumber, deviceDescription, reportedIssue, customerName, intakeDate, trackingUrl }, ref) => {
+  ({ orderNumber, deviceDescription, reportedIssue, customerName, intakeDate, trackingUrl, collectionPointName }, ref) => {
     const truncate = (text: string | null, max: number) => {
       if (!text) return "—";
       return text.length > max ? text.slice(0, max) + "…" : text;
@@ -80,6 +81,11 @@ const DeviceIntakeLabel = forwardRef<HTMLDivElement, Props>(
           <div>
             <div style={{ fontSize: "7px", fontWeight: "bold", letterSpacing: "0.5px", marginBottom: "1px" }}>
               i9 Solution
+              {collectionPointName && (
+                <span style={{ fontWeight: "normal", marginLeft: "4px" }}>
+                  · {truncate(collectionPointName, 20)}
+                </span>
+              )}
             </div>
             <div
               style={{
