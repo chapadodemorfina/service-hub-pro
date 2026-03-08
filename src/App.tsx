@@ -90,6 +90,13 @@ import WarrantiesPage from "./modules/repair/pages/WarrantiesPage";
 // Public Tracking
 import PublicTrackingPage from "./modules/tracking/pages/PublicTrackingPage";
 
+// Technician Mobile
+import TechLayout from "./modules/technician/components/TechLayout";
+import TechDashboardPage from "./modules/technician/pages/TechDashboardPage";
+import TechScanPage from "./modules/technician/pages/TechScanPage";
+import TechQueuePage from "./modules/technician/pages/TechQueuePage";
+import TechOrderDetailPage from "./modules/technician/pages/TechOrderDetailPage";
+
 const queryClient = new QueryClient();
 
 const ProtectedPage = ({ children }: { children: React.ReactNode }) => (
