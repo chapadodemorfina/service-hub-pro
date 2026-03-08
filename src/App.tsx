@@ -76,11 +76,13 @@ import FinanceEditPage from "./modules/finance/pages/FinanceEditPage";
 // Customer Portal
 import PortalLayout from "./modules/portal/components/PortalLayout";
 import PortalLoginPage from "./modules/portal/pages/PortalLoginPage";
+import PortalDashboardPage from "./modules/portal/pages/PortalDashboardPage";
 import PortalOrdersPage from "./modules/portal/pages/PortalOrdersPage";
 import PortalOrderDetailPage from "./modules/portal/pages/PortalOrderDetailPage";
 import PortalQuotesPage from "./modules/portal/pages/PortalQuotesPage";
 import PortalWarrantiesPage from "./modules/portal/pages/PortalWarrantiesPage";
 import PortalLogisticsPage from "./modules/portal/pages/PortalLogisticsPage";
+import PortalSupportPage from "./modules/portal/pages/PortalSupportPage";
 
 // Warranties
 import WarrantiesPage from "./modules/repair/pages/WarrantiesPage";
