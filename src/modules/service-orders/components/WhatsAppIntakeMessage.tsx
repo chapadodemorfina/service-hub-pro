@@ -3,6 +3,10 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { MessageCircle, Copy, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+
+const db = supabase as any;
 
 interface Props {
   customerName: string;
@@ -14,6 +18,15 @@ interface Props {
 export default function WhatsAppIntakeMessage({ customerName, customerPhone, orderNumber, trackingUrl }: Props) {
   const { toast } = useToast();
 
+  const { data: companyName } = useQuery({
+    queryKey: ["app-setting-company-name"],
+    queryFn: async () => {
+      const { data } = await db.from("app_settings").select("value").eq("key", "company_name").maybeSingle();
+      return data?.value || "Nossa equipe";
+    },
+    staleTime: 300000,
+  });
+
   const message = [
     `Olá ${customerName}!`,
     ``,
@@ -23,7 +36,7 @@ export default function WhatsAppIntakeMessage({ customerName, customerPhone, ord
     trackingUrl ? `🔗 Acompanhe aqui: ${trackingUrl}` : null,
     ``,
     `Qualquer dúvida, estamos à disposição!`,
-    `— i9 Solution`,
+    `— ${companyName || "Nossa equipe"}`,
   ].filter(Boolean).join("\n");
 
   const handleCopy = () => {
