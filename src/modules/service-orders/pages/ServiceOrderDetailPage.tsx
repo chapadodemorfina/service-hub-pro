@@ -187,7 +187,7 @@ export default function ServiceOrderDetailPage() {
           </Card>
 
           {/* Diagnosis & Quote */}
-          <DiagnosticQuotePanel serviceOrderId={order.id} deviceType={order.device_type} />
+          <DiagnosticQuotePanel serviceOrderId={order.id} deviceType={order.device_type} deviceBrand={order.device_brand} deviceModel={order.device_model} reportedIssue={order.reported_issue} />
 
           {/* Repair, Tests & Warranty */}
           <RepairTestWarrantyPanel serviceOrderId={order.id} orderStatus={order.status} />
