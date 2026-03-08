@@ -90,6 +90,7 @@ export default function DiagnosisForm({ serviceOrderId, existing, deviceType, de
 
   return (
     <div className="space-y-4">
+      <DiagnosticSuggestionsPanel deviceBrand={deviceBrand} deviceModel={deviceModel} reportedIssue={reportedIssue} deviceType={deviceType} />
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
