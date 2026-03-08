@@ -11,6 +11,7 @@ import DeviceIntakeLabel from "../components/DeviceIntakeLabel";
 import WhatsAppIntakeMessage from "../components/WhatsAppIntakeMessage";
 import DiagnosticQuotePanel from "@/modules/diagnostics/components/DiagnosticQuotePanel";
 import RepairTestWarrantyPanel from "@/modules/repair/components/RepairTestWarrantyPanel";
+import DeviceLocationPanel from "../components/DeviceLocationPanel";
 import PublicLinkManager from "@/modules/tracking/components/PublicLinkManager";
 import CustomerCommunicationPanel from "../components/CustomerCommunicationPanel";
 import { useServiceOrderPublicLinks } from "@/modules/tracking/hooks/usePublicTracking";
@@ -205,6 +206,8 @@ export default function ServiceOrderDetailPage() {
               <StatusTimeline orderId={order.id} />
             </CardContent>
           </Card>
+
+          <DeviceLocationPanel serviceOrderId={order.id} deviceId={order.device_id} />
 
           <PublicLinkManager serviceOrderId={order.id} orderNumber={order.order_number} />
 
