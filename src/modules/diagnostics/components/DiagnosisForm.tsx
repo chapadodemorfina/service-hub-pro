@@ -9,6 +9,7 @@ import { useSaveDiagnostic, useCompleteDiagnosis, useDiagnosisTests, useAddDiagn
 import DiagnosisTestsPanel from "./DiagnosisTestsPanel";
 import DiagnosisFaultsPanel from "./DiagnosisFaultsPanel";
 import DiagnosisPartsPanel from "./DiagnosisPartsPanel";
+import DiagnosticSuggestionsPanel from "./DiagnosticSuggestionsPanel";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -24,9 +25,12 @@ interface Props {
   serviceOrderId: string;
   existing?: Diagnostic | null;
   deviceType?: string | null;
+  deviceBrand?: string | null;
+  deviceModel?: string | null;
+  reportedIssue?: string | null;
 }
 
-export default function DiagnosisForm({ serviceOrderId, existing, deviceType }: Props) {
+export default function DiagnosisForm({ serviceOrderId, existing, deviceType, deviceBrand, deviceModel, reportedIssue }: Props) {
   const saveMutation = useSaveDiagnostic();
   const completeMutation = useCompleteDiagnosis();
   const addTest = useAddDiagnosisTest();
@@ -86,6 +90,7 @@ export default function DiagnosisForm({ serviceOrderId, existing, deviceType }: 
 
   return (
     <div className="space-y-4">
+      <DiagnosticSuggestionsPanel deviceBrand={deviceBrand} deviceModel={deviceModel} reportedIssue={reportedIssue} deviceType={deviceType} />
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">

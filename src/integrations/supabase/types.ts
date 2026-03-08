@@ -2843,6 +2843,15 @@ export type Database = {
       get_cached_inventory_usage: { Args: never; Returns: Json }
       get_cached_partner_performance: { Args: never; Returns: Json }
       get_cached_technician_performance: { Args: never; Returns: Json }
+      get_diagnostic_suggestions: {
+        Args: {
+          _device_brand?: string
+          _device_model?: string
+          _device_type?: string
+          _reported_issue?: string
+        }
+        Returns: Json
+      }
       get_user_collection_points: {
         Args: { _user_id: string }
         Returns: string[]
