@@ -196,6 +196,14 @@ const App = () => (
                 <Route path="commissions" element={<PartnerCommissionsPage />} />
               </Route>
 
+              {/* Technician Mobile */}
+              <Route path="/tech" element={<ProtectedRoute><TechLayout /></ProtectedRoute>}>
+                <Route index element={<TechDashboardPage />} />
+                <Route path="scan" element={<TechScanPage />} />
+                <Route path="queue" element={<TechQueuePage />} />
+                <Route path="order/:id" element={<TechOrderDetailPage />} />
+              </Route>
+
               {/* Public Tracking (no auth) */}
               <Route path="/track/:token" element={<PublicTrackingPage />} />
 
