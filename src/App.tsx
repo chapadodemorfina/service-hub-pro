@@ -53,6 +53,13 @@ import CollectionPointsListPage from "./modules/collection-points/pages/Collecti
 import CollectionPointCreatePage from "./modules/collection-points/pages/CollectionPointCreatePage";
 import CollectionPointDetailPage from "./modules/collection-points/pages/CollectionPointDetailPage";
 import CollectionPointEditPage from "./modules/collection-points/pages/CollectionPointEditPage";
+import CommissionManagementPage from "./modules/collection-points/pages/CommissionManagementPage";
+
+// Partner Portal
+import PartnerPortalLayout from "./modules/collection-points/pages/PartnerPortalLayout";
+import PartnerDashboardPage from "./modules/collection-points/pages/PartnerDashboardPage";
+import PartnerOrdersPage from "./modules/collection-points/pages/PartnerOrdersPage";
+import PartnerCommissionsPage from "./modules/collection-points/pages/PartnerCommissionsPage";
 
 // Logistics Module
 import LogisticsListPage from "./modules/logistics/pages/LogisticsListPage";
