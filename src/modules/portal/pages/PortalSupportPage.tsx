@@ -28,7 +28,7 @@ export default function PortalSupportPage() {
   if (custLoading) return <Skeleton className="h-64 w-full" />;
 
   const whatsappNumber = settings?.whatsapp_support_number || "";
-  const companyName = settings?.company_name || "i9 Solution";
+  const companyName = settings?.company_name || "Suporte";
   const supportEmail = settings?.support_email || "";
   const supportPhone = settings?.support_phone || whatsappNumber;
 

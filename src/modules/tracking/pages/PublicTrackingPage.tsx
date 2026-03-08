@@ -90,7 +90,7 @@ export default function PublicTrackingPage() {
   const quote = data.quote;
   const canApprove = quote && quote.status === "sent";
   const whatsappNumber = data.whatsapp_number || "";
-  const companyName = data.company_name || "i9 Solution";
+  const companyName = data.company_name || "";
   const whatsappMsg = encodeURIComponent(`Olá! Gostaria de informações sobre a OS ${data.order_number}.`);
 
   const handleQuoteAction = (decision: string) => {
