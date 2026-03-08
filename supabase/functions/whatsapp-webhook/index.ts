@@ -564,7 +564,9 @@ const STATUS_LABELS: Record<string, string> = {
 // ===== AI CLASSIFICATION =====
 
 async function classifyAndRespond(apiKey: string, message: string, customerName: string, context: any, conversationId: string) {
-  const systemPrompt = `Você é o assistente virtual da i9 Solution, uma assistência técnica de eletrônicos.
+  const companyNameResult = await supabaseAdmin.from("app_settings").select("value").eq("key", "company_name").maybeSingle();
+  const companyName = companyNameResult?.data?.value || "nossa empresa";
+  const systemPrompt = `Você é o assistente virtual da ${companyName}, uma assistência técnica de eletrônicos.
 Seu objetivo é ajudar clientes a consultar informações sobre seus serviços de forma clara e objetiva.
 
 REGRAS ABSOLUTAS:

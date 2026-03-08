@@ -210,7 +210,7 @@ export default function PortalLoginPage() {
           </Tabs>
 
           <p className="text-center text-xs text-muted-foreground mt-6">
-            Acesso exclusivo para clientes i9 Solution.
+            Acesso exclusivo para clientes.
             <br />
             <Link to="/login" className="text-primary hover:underline">Acesso administrativo →</Link>
           </p>

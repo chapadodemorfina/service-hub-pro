@@ -231,7 +231,7 @@ async function deliverEmail(
 ): Promise<DeliveryResult> {
   const apiKey = Deno.env.get("EMAIL_API_KEY");
   const apiUrl = Deno.env.get("EMAIL_API_URL");
-  const fromEmail = Deno.env.get("EMAIL_FROM") || "noreply@i9solution.com";
+  const fromEmail = Deno.env.get("EMAIL_FROM") || "noreply@example.com";
 
   if (!apiKey || !apiUrl) {
     return {
@@ -252,7 +252,7 @@ async function deliverEmail(
       body: JSON.stringify({
         from: fromEmail,
         to: item.recipient_address,
-        subject: item.rendered_subject || "Notificação i9 Solution",
+        subject: item.rendered_subject || "Notificação",
         text: item.rendered_body,
       }),
     });
