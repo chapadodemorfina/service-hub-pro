@@ -17,6 +17,7 @@ export interface DashboardSummary {
   total_commissions: number;
   quotes_total: number;
   quotes_approved: number;
+  quotes_rejected: number;
   warranties_total: number;
   warranties_voided: number;
   avg_turnaround_hours: number | null;
@@ -24,8 +25,19 @@ export interface DashboardSummary {
   device_types: Record<string, number>;
   top_defects: { cause: string; count: number }[];
   technician_orders: { technician_id: string; name: string; count: number }[];
-  collection_point_orders: { cp_id: string; name: string; count: number }[];
+  collection_point_orders: { cp_id: string; name: string; count: number; revenue: number; commissions: number }[];
   monthly_trend: { month: string; orders: number; revenue: number; expenses: number; profit: number }[];
+  // New BI metrics
+  today_received: number;
+  today_delivered: number;
+  today_revenue: number;
+  today_quotes: number;
+  avg_diagnosis_hours: number | null;
+  avg_ticket_value: number | null;
+  top_parts: { name: string; sku: string; qty: number; cost: number }[];
+  stock_value: number;
+  low_stock_count: number;
+  pipeline: Record<string, number>;
 }
 
 export function useDashboardData(dateRange: DateRange) {
@@ -45,19 +57,13 @@ export function useDashboardData(dateRange: DateRange) {
   });
 }
 
-// Keep for backward compatibility
 export function useMonthlyTrend() {
   return useQuery<{ month: string; orders: number; revenue: number; expenses: number; profit: number }[]>({
     queryKey: ["dashboard-monthly-trend"],
     queryFn: async () => {
-      // Monthly trend is now included in dashboard_summary, but this hook
-      // can be used independently. We call the summary with a wide range.
       const from = new Date(Date.now() - 180 * 86400000).toISOString();
       const to = new Date().toISOString();
-      const { data, error } = await db.rpc("dashboard_summary", {
-        _from: from,
-        _to: to,
-      });
+      const { data, error } = await db.rpc("dashboard_summary", { _from: from, _to: to });
       if (error) throw error;
       return (data as DashboardSummary).monthly_trend || [];
     },
