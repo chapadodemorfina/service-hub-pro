@@ -90,7 +90,7 @@ export default function PortalLoginPage() {
             </div>
           </div>
           <CardTitle className="text-2xl font-bold">Portal do Cliente</CardTitle>
-          <CardDescription>i9 Solution — Acompanhe seus serviços</CardDescription>
+          <CardDescription>Acompanhe seus serviços</CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={authMode} onValueChange={(v) => { setAuthMode(v as any); setOtpSent(false); }}>
@@ -210,7 +210,7 @@ export default function PortalLoginPage() {
           </Tabs>
 
           <p className="text-center text-xs text-muted-foreground mt-6">
-            Acesso exclusivo para clientes i9 Solution.
+            Acesso exclusivo para clientes.
             <br />
             <Link to="/login" className="text-primary hover:underline">Acesso administrativo →</Link>
           </p>
