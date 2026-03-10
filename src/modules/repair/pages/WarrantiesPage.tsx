@@ -37,6 +37,16 @@ export default function WarrantiesPage() {
     if (isPast(new Date(w.end_date))) return <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">Expirada</Badge>;
     return <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">Ativa</Badge>;
   };
+  const filteredWarranties = useMemo(() => {
+    if (!warranties || !search) return warranties;
+    const lower = search.toLowerCase();
+    return warranties.filter((w: any) =>
+      w.warranty_number?.toLowerCase().includes(lower) ||
+      w.service_orders?.order_number?.toLowerCase().includes(lower) ||
+      w.service_orders?.customers?.full_name?.toLowerCase().includes(lower) ||
+      `${w.service_orders?.devices?.brand || ""} ${w.service_orders?.devices?.model || ""}`.toLowerCase().includes(lower)
+    );
+  }, [warranties, search]);
 
   if (isLoading || analyticsLoading) return <div className="space-y-4">{Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-24" />)}</div>;
 
