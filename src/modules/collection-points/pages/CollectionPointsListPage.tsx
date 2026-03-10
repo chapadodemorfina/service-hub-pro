@@ -10,14 +10,8 @@ import { commissionTypeLabels } from "../types";
 
 export default function CollectionPointsListPage() {
   const navigate = useNavigate();
-  const { data: points, isLoading } = useCollectionPoints();
   const [search, setSearch] = useState("");
-
-  const filtered = points?.filter(p =>
-    p.name.toLowerCase().includes(search.toLowerCase()) ||
-    (p.city || "").toLowerCase().includes(search.toLowerCase()) ||
-    (p.responsible_person || "").toLowerCase().includes(search.toLowerCase())
-  );
+  const { data: points, isLoading } = useCollectionPoints(search);
 
   return (
     <div className="space-y-4">
