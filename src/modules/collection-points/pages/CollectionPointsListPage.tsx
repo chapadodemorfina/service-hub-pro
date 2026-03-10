@@ -24,7 +24,7 @@ export default function CollectionPointsListPage() {
 
       <div className="relative max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input className="pl-9" placeholder="Buscar por nome, cidade ou responsável..." value={search} onChange={e => setSearch(e.target.value)} />
+        <Input className="pl-9" placeholder="Buscar por nome, responsável, cidade, telefone, email..." value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
       {isLoading ? <p className="text-muted-foreground">Carregando...</p> : (
