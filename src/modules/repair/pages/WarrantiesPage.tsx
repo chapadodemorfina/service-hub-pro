@@ -21,6 +21,7 @@ export default function WarrantiesPage() {
   const [voidOpen, setVoidOpen] = useState(false);
   const [selectedWarrantyId, setSelectedWarrantyId] = useState<string | null>(null);
   const [voidReason, setVoidReason] = useState("");
+  const [search, setSearch] = useState("");
 
   const handleVoid = async () => {
     if (!selectedWarrantyId || !voidReason.trim()) return;
