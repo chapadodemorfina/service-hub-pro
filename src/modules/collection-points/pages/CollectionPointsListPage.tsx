@@ -54,7 +54,7 @@ export default function CollectionPointsListPage() {
                 </TableCell>
               </TableRow>
             ))}
-            {!filtered?.length && (
+            {!points?.length && (
               <TableRow><TableCell colSpan={6} className="text-center text-muted-foreground py-8">Nenhum ponto de coleta encontrado</TableCell></TableRow>
             )}
           </TableBody>
