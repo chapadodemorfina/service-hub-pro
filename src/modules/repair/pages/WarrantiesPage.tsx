@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Shield, ShieldCheck, ShieldX, AlertTriangle, RotateCcw, BarChart3 } from "lucide-react";
+import { Shield, ShieldCheck, ShieldX, AlertTriangle, RotateCcw, BarChart3, Search } from "lucide-react";
 import { format, isPast } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Link } from "react-router-dom";
