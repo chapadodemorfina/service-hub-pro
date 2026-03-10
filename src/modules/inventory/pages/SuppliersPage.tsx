@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useSuppliers, useCreateSupplier } from "../hooks/useInventory";
 import SupplierForm from "../components/SupplierForm";
 
 export default function SuppliersPage() {
-  const { data: suppliers, isLoading } = useSuppliers();
+  const [search, setSearch] = useState("");
+  const { data: suppliers, isLoading } = useSuppliers(search);
   const create = useCreateSupplier();
   const [showForm, setShowForm] = useState(false);
 
