@@ -11,9 +11,9 @@ import StockEntryDialog from "../components/StockEntryDialog";
 
 export default function ProductsListPage() {
   const navigate = useNavigate();
-  const { data: products, isLoading } = useProducts();
   const [search, setSearch] = useState("");
   const [showEntry, setShowEntry] = useState(false);
+  const { data: products, isLoading } = useProducts(search);
 
   const filtered = products?.filter(p =>
     p.name.toLowerCase().includes(search.toLowerCase()) ||
